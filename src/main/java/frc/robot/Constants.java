@@ -11,22 +11,21 @@ public final class Constants {
     public static final int frport = 5;
     public static final int blport = 6;
     public static final int brport = 7;
-    //limelight is 8?, not using
   }
 
   //drivejoystick
-  public static double kX = 0.2;
-  public static double kY = 0.2;
-  public static double kR = 0.2;
-  public static int xaxis = 5; //change
-  public static int yaxis = 6; //change
-  public static int raxis = 7; //change
+  public static double kX = 0.5;
+  public static double kY = 0.5;
+  public static double kR = 0.5;
+  public static int xaxis = 0; //joystick
+  public static int yaxis = 1; //joystick
+  public static int raxis = 3; //slider
 
   //movetotag
   //PID constants
-  public static double kPx = 0.3; //measurement in feet
-  public static double kPy = 0.3; //measurement in feet
-  public static double kPr = 0.05; //measurement in degrees
+  public static double kPx = 0.5; //meters
+  public static double kPy = 0.3; //meters
+  public static double kPr = 0.05; //degrees
   public static double kDx = 0;
   public static double kDy = 0;
   public static double kDr = 0;
@@ -34,23 +33,16 @@ public final class Constants {
   public static double kIy = 0;
   public static double kIr = 0;
 
-  public static double xclamp = 0.5;
-  public static double yclamp = 0.5;
-  public static double rclamp = 0.5;
+  public static double xclamp = 0.8; //slides sideways very slowly
+  public static double yclamp = 0.4;
+  public static double rclamp = 0.2;
 
-  /* 
-  public static double goalydist = 3; //feet for now
-  public static double goalxdist = 0; //feet
-  public static double goalr = 180; //degrees
-  */
+  //public static double tagheight = 0.49; //19.3 inches to meters
 
-  public static double tagheight = 5; //feet
+  public static double xtolerance = 0; 
+  public static double ytolerance = 0.3; 
+  public static double rtolerance = 5; //degrees
 
-  public static double xtolerance = 3; //degrees
-  public static double ytolerance = 0.1; //feet, distance
-  public static double rtolerance = 3; //degrees
-
-  public static double mountingangle = 0; //degrees?, limelight crosshair
-  public static double cameraheight = 0; //degrees
-  
+  public static double mountingangle = 0; //for adjustable camera
+  public static double cameraheight = 0.356; //14-ish inches, to meters
 }

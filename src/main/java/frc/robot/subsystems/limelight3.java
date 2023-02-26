@@ -22,19 +22,23 @@ public class limelight3 extends SubsystemBase {
 
   double targetX;
   double targetY;
+
   double targetYaw;
+  double targetPitch;
+  double targetRoll;
+
   int targetId;
 
   NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   public limelight3() {}
 
-  public double getX() {
+  public double getTX() {
     targetX = limelightTable.getEntry("tx").getDouble(0);
     return (targetX);
   }
 
-  public double getY() {
+  public double getTY() { //up/down, ty without *-1 is negative up/positive down
     targetY = -1 * limelightTable.getEntry("ty").getDouble(0);
     return (targetY);
   }
@@ -43,6 +47,33 @@ public class limelight3 extends SubsystemBase {
     cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
     targetYaw = cameratotarget[5];
     return (targetYaw);
+  }
+
+  public double getPitch(){ //for rotation
+    cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
+    targetPitch = cameratotarget[4];
+    return (targetPitch);
+  }
+
+  public double getRoll(){ //for rotation
+    cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
+    targetRoll = cameratotarget[3];
+    return (targetRoll);
+  }
+
+  public double getZ(){ //for rotation
+    cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
+    return (cameratotarget[2]);
+  }
+
+  public double getY(){ //for rotation
+    cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
+    return (cameratotarget[1]);
+  }
+
+  public double getX(){ //for rotation
+    cameratotarget = limelightTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); //x, y, z, roll, pitch, yaw
+    return (cameratotarget[0]);
   }
 
   public double[] getCamtoTarget() {

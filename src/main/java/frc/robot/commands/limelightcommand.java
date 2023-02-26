@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.networktables.NetworkTableEntry;
 
 
-//just for testing
+//for testing only
 
 public class limelightcommand extends CommandBase {
   private final limelight3 camera;
@@ -34,8 +34,8 @@ public class limelightcommand extends CommandBase {
     //System.out.println("y " + camera.getY());
 
 
-    double xangle = camera.getX() * Math.PI / 180; //in radians
-    double yangle = camera.getY() * Math.PI / 180; // in radians
+    double xangle = camera.getTX() * Math.PI / 180; //in radians
+    double yangle = camera.getTY() * Math.PI / 180; // in radians
 
     double [] ntvalues = camera.getCamtoTarget();
     for(int i=3;i<6;i++){

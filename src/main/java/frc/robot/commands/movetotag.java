@@ -50,21 +50,46 @@ public class movetotag extends CommandBase {
 
   @Override
   public void execute() {    
-    //y movement PID: triangle with ty, height difference, and goal y distance
-    double currentyangle = camera.getY() + Constants.mountingangle;
-    double currentydistance = (Constants.tagheight - Constants.cameraheight)/Math.tan(currentyangle);
+    //y, forward/backward distance from tagpose_cameraspace, meters
+    double currentydistance = camera.getZ(); //? getY?
 
-    //x movement PID: triangle with tx, current y distance, and goal x distance
-    xangle = camera.getX();
-    double currentxdistance = currentydistance * Math.tan(xangle);
+    //x, left/right distance from tagpose_cameraspace, meters
+    double currentxdistance = camera.getX();
 
-    //r movement PID
-    double currentr = camera.getYaw();
-
-    double xspeed = MathUtil.clamp((xcontroller.calculate(currentxdistance, goalxdist)), -Constants.xclamp, Constants.xclamp);
-    double yspeed = MathUtil.clamp((ycontroller.calculate(currentydistance, goalydist)), -Constants.yclamp, Constants.yclamp);
-    double rspeed = MathUtil.clamp((rcontroller.calculate(currentr, goalr)), -Constants.rclamp, Constants.rclamp);
+    //r, rotation of tag around z-axis (up/down) from tagpose_cameraspace, in degrees
+    double currentr = camera.getPitch();
     
+
+    double xspeed = -1 * MathUtil.clamp((xcontroller.calculate(currentxdistance, goalxdist)), -Constants.xclamp, Constants.xclamp);
+    double yspeed = -1 * MathUtil.clamp((ycontroller.calculate(currentydistance, goalydist)), -Constants.yclamp, Constants.yclamp);
+    double rspeed = -0.5 * MathUtil.clamp((rcontroller.calculate(currentr, goalr)), -Constants.rclamp, Constants.rclamp); //only works with clockwise rotation for some reason
+      //^ mecanum drive, +/- xspeed, rspeed might be issue
+
+    //System.out.println(xspeed); //xspeed negative when counterclockwise
+    //System.out.println(rspeed); //rotation negative when counterclockwise
+
+    //stopping individually since command only ends with all 3
+    if (xcontroller.atSetpoint()){
+      xspeed = 0;
+    }
+    if (ycontroller.atSetpoint()){
+      yspeed = 0;
+    }
+    if (ycontroller.atSetpoint()){
+      rspeed = 0;
+    }
+
+    //stopping abrupt movement at end
+    if (xspeed < 0.02){
+      xspeed = 0;
+    }
+    if (yspeed < 0.02){
+      yspeed = 0;
+    }
+    if (rspeed < 0.02){
+      rspeed = 0;
+    }
+
     Drivetrain.drive(xspeed, yspeed, rspeed);
   }
 
@@ -73,7 +98,6 @@ public class movetotag extends CommandBase {
 
   @Override
   public boolean isFinished() {
- 
-    return (xcontroller.atSetpoint() && ycontroller.atSetpoint() && rcontroller.atSetpoint());
+    return (xcontroller.atSetpoint() && ycontroller.atSetpoint() && rcontroller.atSetpoint()); //was accidentally running without stopping rcontroller in church 2/26
   }
 }

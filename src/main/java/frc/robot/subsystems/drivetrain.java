@@ -26,10 +26,10 @@ public class drivetrain extends SubsystemBase {
     frontleft.setInverted(false);
     backleft.setInverted(false);
     frontright.setInverted(true);
-    backright.setInverted(true);
+    backright.setInverted(true); 
   }
 
-  public void drive(double xspeed, double yspeed, double rspeed){ //from mecanum wheels guide
+  public void drive(double xspeed, double yspeed, double rspeed){ //from gobilda mecanum wheels guide
     frontleft.set(xspeed + yspeed + rspeed);
     backleft.set(-xspeed + yspeed + rspeed);
     frontright.set(-xspeed + yspeed - rspeed);
