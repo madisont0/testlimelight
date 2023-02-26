@@ -7,6 +7,8 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import frc.robot.subsystems.*;
 //import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -28,11 +30,14 @@ public class drivejoystick extends CommandBase {
 
   @Override
   public void execute() { 
+
     double xcoord = joystick.getRawAxis(Constants.xaxis);
     double ycoord = -joystick.getRawAxis(Constants.yaxis); //y joystick is reversed
     double rot = joystick.getRawAxis(Constants.raxis);
 
     Drivetrain.drive(xcoord * Constants.kX, ycoord * Constants.kY, rot * Constants.kR);
+  
+    System.out.println(xcoord);
   }
 
   @Override
